@@ -16,30 +16,29 @@ public class MungeForkMojo
     extends AbstractMojo
 {
     /**
-     * @parameter default-value="${classifier}"
-     */
-    private String classifier;
-
-    /**
-     * @parameter expression="${executedProject}"
-     */
-    private MavenProject executedProject;
-
-    /**
      * @component
      */
     private MavenProjectHelper projectHelper;
+
+    /**
+     * @parameter default-value="${classifier}"
+     */
+    private String classifier;
 
     /**
      * @parameter expression="${project}"
      */
     private MavenProject project;
 
+    /**
+     * @parameter expression="${executedProject}"
+     */
+    private MavenProject executedProject;
+
     public void execute()
         throws MojoExecutionException
     {
         final Artifact mungedArtifact = executedProject.getArtifact();
-
         projectHelper.attachArtifact( project, mungedArtifact.getType(), classifier, mungedArtifact.getFile() );
     }
 }

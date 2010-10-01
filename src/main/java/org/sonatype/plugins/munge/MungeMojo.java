@@ -2,7 +2,9 @@ package org.sonatype.plugins.munge;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import org.apache.maven.model.Build;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -23,59 +25,83 @@ public class MungeMojo
     private String classifier;
 
     /**
-     * @parameter default-value="${project.build.sourceDirectory}"
+     * @parameter default-value="${symbols}"
      */
-    private File mainSourceDirectory;
+    private String symbols;
 
     /**
-     * @parameter default-value="${project.build.testSourceDirectory}"
+     * @parameter default-value="${includes}"
      */
-    private File testSourceDirectory;
+    private String includes;
 
     /**
-     * @parameter default-value="${project.build.directory}"
+     * @parameter default-value="${excludes}"
      */
-    private File targetDirectory;
+    private String excludes;
+
+    /**
+     * @parameter expression="${project.build}"
+     */
+    private Build build;
 
     /**
      * @parameter expression="${executedProject}"
      */
     private MavenProject executedProject;
 
+    @SuppressWarnings( "unchecked" )
     public void execute()
         throws MojoExecutionException
     {
-        final File mungeDirectory = new File( targetDirectory, classifier );
-        final File mungedMainDirectory = new File( mungeDirectory, "main" );
-        final File mungedTestDirectory = new File( mungeDirectory, "test" );
+        for ( final String s : symbols.split( "," ) )
+        {
+            Munge.symbols.clear();
+            Munge.symbols.put( s, Boolean.TRUE );
+        }
 
+        final String mungeDirectory = build.getDirectory() + File.separator + classifier;
+
+        final String mungedMainDirectory = mungeDirectory + File.separator + "main";
+        final String mungedTestDirectory = mungeDirectory + File.separator + "test";
+
+        munge( build.getSourceDirectory(), mungedMainDirectory, includes, excludes );
+        munge( build.getTestSourceDirectory(), mungedTestDirectory, includes, excludes );
+
+        if ( null != executedProject )
+        {
+            executedProject.getCompileSourceRoots().clear();
+            executedProject.addCompileSourceRoot( mungedMainDirectory );
+
+            executedProject.getTestCompileSourceRoots().clear();
+            executedProject.addTestCompileSourceRoot( mungedTestDirectory );
+
+            final Build executedBuild = executedProject.getBuild();
+            executedBuild.setDirectory( mungeDirectory );
+
+            executedBuild.setOutputDirectory( mungeDirectory + File.separator + "classes" );
+            executedBuild.setTestOutputDirectory( mungeDirectory + File.separator + "test-classes" );
+        }
+    }
+
+    @SuppressWarnings( "unchecked" )
+    public static void munge( final String from, final String to, final String includes, final String excludes )
+        throws MojoExecutionException
+    {
         try
         {
-            if ( mainSourceDirectory.isDirectory() )
+            for ( final File f : (List<File>) FileUtils.getFiles( new File( from ), includes, excludes ) )
             {
-                FileUtils.copyDirectoryStructure( mainSourceDirectory, mungedMainDirectory );
-            }
-            if ( testSourceDirectory.isDirectory() )
-            {
-                FileUtils.copyDirectoryStructure( testSourceDirectory, mungedTestDirectory );
+                final String inPath = f.getPath();
+                final String outPath = inPath.replace( from, to );
+                new File( outPath ).getParentFile().mkdirs();
+                final Munge munge = new Munge( inPath, outPath );
+                munge.process();
+                munge.close();
             }
         }
         catch ( final IOException e )
         {
             throw new MojoExecutionException( e.toString() );
-        }
-
-        if ( null != executedProject )
-        {
-            executedProject.getCompileSourceRoots().clear();
-            executedProject.addCompileSourceRoot( mungedMainDirectory.getPath() );
-
-            executedProject.getTestCompileSourceRoots().clear();
-            executedProject.addTestCompileSourceRoot( mungedTestDirectory.getPath() );
-
-            executedProject.getBuild().setDirectory( mungeDirectory.getPath() );
-            executedProject.getBuild().setOutputDirectory( mungeDirectory + "/classes" );
-            executedProject.getBuild().setTestOutputDirectory( mungeDirectory + "/test-classes" );
         }
     }
 }
