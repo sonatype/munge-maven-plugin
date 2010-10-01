@@ -1,0 +1,17 @@
+<lifecycles>
+  <lifecycle>
+    <id>munge</id>
+    <phases>
+      <phase>
+        <id>generate-sources</id>
+        <executions>
+          <execution>
+            <goals>
+              <goal>munge</goal>
+            </goals>
+          </execution>
+        </executions>
+      </phase>
+    </phases>
+  </lifecycle>
+</lifecycles>
