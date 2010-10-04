@@ -3,11 +3,22 @@
 
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>org.sonatype.forge</groupId>
+    <artifactId>forge-parent</artifactId>
+    <version>6</version>
+  </parent>
+
   <groupId>org.sonatype.plugins</groupId>
   <artifactId>munge-maven-plugin</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <packaging>maven-plugin</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <forgeReleaseUrl>https://repository.sonatype.org/service/local/staging/deploy/maven2</forgeReleaseUrl>
+  </properties>
 
   <dependencies>
     <dependency>
