@@ -66,9 +66,9 @@ public class MungeMojo
     public void execute()
         throws MojoExecutionException
     {
+        Munge.symbols.clear();
         for ( final String s : symbols.split( "," ) )
         {
-            Munge.symbols.clear();
             Munge.symbols.put( s, Boolean.TRUE );
         }
 
