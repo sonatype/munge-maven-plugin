@@ -24,6 +24,11 @@
     <url>git@github.com:sonatype/munge-maven-plugin.git</url>
   </scm>
 
+  <ciManagement>
+    <system>Hudson</system>
+    <url>https://grid.sonatype.org/ci/job/munge-maven-plugin/</url>
+  </ciManagement>
+
   <licenses>
     <license>
       <name>Common Development and Distribution License</name>
