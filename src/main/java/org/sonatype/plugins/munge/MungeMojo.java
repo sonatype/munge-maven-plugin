@@ -13,6 +13,8 @@ import org.codehaus.plexus.util.FileUtils;
 /**
  * Munges source files by keeping or removing sections of code according to what symbols are enabled.
  * 
+ * @see http://blog.publicobject.com/2009/02/preprocessing-java-with-munge.html
+ * @see http://weblogs.java.net/blog/2006/09/05/munge-swings-secret-preprocessor
  * @goal munge
  * @phase generate-sources
  */
@@ -27,21 +29,22 @@ public class MungeMojo
     private String mungedDirectory;
 
     /**
-     * List of symbol names (separated by commas) identifying which pieces of code to retain when munging.
+     * List of symbols (separated by commas) identifying which sections of munged code to keep.
      * 
      * @parameter default-value="${symbols}"
+     * @required
      */
     private String symbols;
 
     /**
-     * List of patterns (separated by commas) used to specify the files that should be included in munging.
+     * List of patterns (separated by commas) specifying files that should be munged; by default munge everything.
      * 
      * @parameter default-value="${includes}"
      */
     private String includes;
 
     /**
-     * List of patterns (separated by commas) used to specify the files that should be excluded from munging.
+     * List of patterns (separated by commas) specifying files that should not be copied; by default exclude nothing.
      * 
      * @parameter default-value="${excludes}"
      */
@@ -49,11 +52,13 @@ public class MungeMojo
 
     /**
      * @parameter expression="${project.build}"
+     * @readonly
      */
     private Build build;
 
     /**
      * @parameter expression="${executedProject}"
+     * @readonly
      */
     private MavenProject executedProject;
 
