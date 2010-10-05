@@ -11,7 +11,7 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 
 /**
- * Munge.
+ * Munges source files by keeping or removing sections of code according to what symbols are enabled.
  * 
  * @goal munge
  * @phase generate-sources
@@ -20,21 +20,29 @@ public class MungeMojo
     extends AbstractMojo
 {
     /**
-     * @parameter default-value="${classifier}"
+     * Where to put the munged source files.
+     * 
+     * @parameter default-value="${project.build.directory}/munged"
      */
-    private String classifier;
+    private String mungedDirectory;
 
     /**
+     * List of symbol names (separated by commas) identifying which pieces of code to retain when munging.
+     * 
      * @parameter default-value="${symbols}"
      */
     private String symbols;
 
     /**
+     * List of patterns (separated by commas) used to specify the files that should be included in munging.
+     * 
      * @parameter default-value="${includes}"
      */
     private String includes;
 
     /**
+     * List of patterns (separated by commas) used to specify the files that should be excluded from munging.
+     * 
      * @parameter default-value="${excludes}"
      */
     private String excludes;
@@ -59,10 +67,8 @@ public class MungeMojo
             Munge.symbols.put( s, Boolean.TRUE );
         }
 
-        final String mungeDirectory = build.getDirectory() + File.separator + classifier;
-
-        final String mungedMainDirectory = mungeDirectory + File.separator + "main";
-        final String mungedTestDirectory = mungeDirectory + File.separator + "test";
+        final String mungedMainDirectory = mungedDirectory + File.separator + "main";
+        final String mungedTestDirectory = mungedDirectory + File.separator + "test";
 
         munge( build.getSourceDirectory(), mungedMainDirectory, includes, excludes );
         munge( build.getTestSourceDirectory(), mungedTestDirectory, includes, excludes );
@@ -76,13 +82,22 @@ public class MungeMojo
             executedProject.addTestCompileSourceRoot( mungedTestDirectory );
 
             final Build executedBuild = executedProject.getBuild();
-            executedBuild.setDirectory( mungeDirectory );
+            executedBuild.setDirectory( mungedDirectory );
 
-            executedBuild.setOutputDirectory( mungeDirectory + File.separator + "classes" );
-            executedBuild.setTestOutputDirectory( mungeDirectory + File.separator + "test-classes" );
+            executedBuild.setOutputDirectory( mungedDirectory + File.separator + "classes" );
+            executedBuild.setTestOutputDirectory( mungedDirectory + File.separator + "test-classes" );
         }
     }
 
+    /**
+     * Munges source files found in {@code from} and places them in {@code to}, honoring any includes or excludes.
+     * 
+     * @param from The original source directory
+     * @param to The munged source directory
+     * @param includes Comma-separated list of files to include
+     * @param excludes Comma-separated list of files to exclude
+     * @throws MojoExecutionException
+     */
     @SuppressWarnings( "unchecked" )
     public static void munge( final String from, final String to, final String includes, final String excludes )
         throws MojoExecutionException

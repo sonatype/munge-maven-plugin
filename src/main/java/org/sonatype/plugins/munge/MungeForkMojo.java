@@ -1,13 +1,10 @@
 package org.sonatype.plugins.munge;
 
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.MavenProjectHelper;
 
 /**
- * Fork.
+ * Forks a new build that compiles and runs tests using the munged source in place of the original.
  * 
  * @goal munge-fork
  * @execute lifecycle=munge phase=prepare-package
@@ -18,5 +15,6 @@ public class MungeForkMojo
     public void execute()
         throws MojoExecutionException
     {
+        // this mojo only exists to launch the forked build
     }
 }
