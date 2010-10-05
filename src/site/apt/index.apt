@@ -8,3 +8,131 @@
   
 Introduction
 
+  The Munge Plugin for Maven provides mojos to <munge> (pre-process) Java code. It uses the Munge class originally
+  open-sourced on Tom Ball's {{{http://weblogs.java.net/blog/tball/archive/2006/09/munge_swings_se.html}blog}} and
+  subsequently updated by {{{http://blog.publicobject.com/2009/02/preprocessing-java-with-munge.html}Jesse Wilson}}.
+
+Description
+
+  Munge is a purposely-simple Java preprocessor. It only supports
+  conditional inclusion of source based on defined strings of the
+  form "if[tag]", "if_not[tag]", "else[tag], and "end[tag]".
+  Unlike traditional preprocessors, comments, and formatting are all
+  preserved for the included lines. This is on purpose, as the output
+  of Munge will be distributed as human-readable source code.
+
+  To avoid creating a separate Java dialect, the conditional tags are
+  contained in Java comments. This allows one build to compile the
+  source files without pre-processing, to facilitate faster incremental
+  development. Other builds from the same source have their code contained 
+  within that comment. The format of the tags is a little verbose, so 
+  that the tags won't accidentally be used by other comment readers
+  such as javadoc. Munge tags <<must>> be in C-style comments; 
+  C++-style comments may be used to comment code within a comment.
+
+  Like any preprocessor, developers must be careful not to abuse its
+  capabilities so that their code becomes unreadable. Please use it
+  as little as possible.
+
+Usage
+
+* tags
+
+  Here are some example munge tags:
+
++---+
+  /*if[DEBUG]*/
+    ...
+    // extra debugging code
+    ...
+  /*end[DEBUG]*/
+
+  /*if[WINDOWS]*/
+    ...
+    // windows optimized code
+    ...
+  /*else[WINDOWS]*/
+    ...
+    // non-optimized general code
+    ...
+  /*end[WINDOWS]*/
+
+  /*if_not[LOG4J]*/
+    ...
+    // fall back to JDK logging
+    ...
+  /*end[LOG4J]*/
++---+
+
+* munge
+
+  Munge source and put it in the default munged directory <<<${project.build.directory}/munged>>>.
+  Note: this does not attach the source, but you could use the <<<build-helper-maven-plugin>>> to do this.
+
++---+
+  <build>
+    ...
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>munge-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>munge</id>
+            <phase>generate-source</phase>
+            <goals>
+              <goal>munge</goal>
+            </goals>
+            <configuration>
+              <symbols>DEBUG</symbols>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    ...
++---+
+
+* munge-fork
+
+  Fork builds to compile and test Windows and Linux flavors of the project.
+  Note: builds are run up to the <<<prepare-package>>> phase of the lifecycle.
+
++---+
+  <build>
+    ...
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>munge-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>windows</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>munge-fork</goal>
+            </goals>
+            <configuration>
+              <mungedDirectory>${project.build.directory}/windows</mungedDirectory>
+              <symbols>WINDOWS</symbols>
+              <excludes>
+                **/Linux*.java
+              </excludes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>linux</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>munge-fork</goal>
+            </goals>
+            <configuration>
+              <mungedDirectory>${project.build.directory}/linux</mungedDirectory>
+              <symbols>LINUX</symbols>
+              <excludes>
+                **/Windows*.java
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    ...
++---+
+
