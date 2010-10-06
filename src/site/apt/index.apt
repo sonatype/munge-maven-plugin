@@ -41,27 +41,27 @@ Usage
   Here are some example munge tags:
 
 +---+
-  /*if[DEBUG]*/
+  /*if[DEBUG]
     ...
     // extra debugging code
     ...
-  /*end[DEBUG]*/
+  end[DEBUG]*/
 
-  /*if[WINDOWS]*/
+  /*if[WINDOWS]
     ...
     // windows optimized code
     ...
-  /*else[WINDOWS]*/
+  else[WINDOWS]*/
     ...
     // non-optimized general code
     ...
   /*end[WINDOWS]*/
 
-  /*if_not[LOG4J]*/
+  /*if_not[PRODUCTION]
     ...
-    // fall back to JDK logging
+    // non-production code
     ...
-  /*end[LOG4J]*/
+  end[PRODUCTION]*/
 +---+
 
 * munge

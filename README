@@ -11,7 +11,7 @@ source files without pre-processing, to facilitate faster incremental
 development. Other builds from the same source have their code contained
 within that comment. The format of the tags is a little verbose, so
 that the tags won't accidentally be used by other comment readers
-such as javadoc. Munge tags <<must>> be in C-style comments;
+such as javadoc. Munge tags must be in C-style comments;
 C++-style comments may be used to comment code within a comment.
 
 Like any preprocessor, developers must be careful not to abuse its
