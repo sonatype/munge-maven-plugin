@@ -66,7 +66,7 @@ Usage
 
 * munge
 
-  Munge source and put it in the default munged directory <<<${project.build.directory}/munged>>>.
+  This example munges the project source with DEBUG and puts it in <<<${project.build.directory}/munged>>>.
   Note: this does not attach the source, but you could use the <<<build-helper-maven-plugin>>> to do this.
 
 +---+
@@ -93,8 +93,8 @@ Usage
 
 * munge-fork
 
-  Fork builds to compile and test Windows and Linux flavors of the project.
-  Note: builds are run up to the <<<prepare-package>>> phase of the lifecycle.
+  This example forks builds to compile and test Windows and Linux flavors of the project.
+  Note: the forked builds are run up to the <<<prepare-package>>> phase of the lifecycle.
 
 +---+
   <build>

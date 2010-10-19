@@ -17,10 +17,14 @@
 
   <name>Munge Maven Plugin</name>
 
+  <description>Simple Java preprocessor</description>
+
+  <url>http://github.com/sonatype/munge-maven-plugin</url>
+
   <scm>
     <connection>scm:git:git@github.com:sonatype/munge-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:sonatype/munge-maven-plugin.git</developerConnection>
-    <url>git@github.com:sonatype/munge-maven-plugin.git</url>
+    <url>http://github.com/sonatype/munge-maven-plugin</url>
   </scm>
 
   <ciManagement>
