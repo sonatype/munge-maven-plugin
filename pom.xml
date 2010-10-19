@@ -21,6 +21,13 @@
 
   <url>http://github.com/sonatype/munge-maven-plugin</url>
 
+  <inceptionYear>2010</inceptionYear>
+
+  <organization>
+    <name>Sonatype, Inc.</name>
+    <url>http://www.sonatype.com</url>
+  </organization>
+
   <scm>
     <connection>scm:git:git@github.com:sonatype/munge-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:sonatype/munge-maven-plugin.git</developerConnection>
