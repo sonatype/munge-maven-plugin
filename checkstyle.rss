@@ -3,19 +3,19 @@
 <rss version="0.91">
   <channel>
     <title>Munge Maven Plugin - Checkstyle report</title>
-    <link>http://forge.sonatype.com/plugins-parent/munge-maven-plugin/</link>
+    <link>http://github.com/sonatype/munge-maven-plugin</link>
     <description>Munge Maven Plugin - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2008 - 2010</copyright>
+    <copyright>&#169;2010 Sonatype, Inc.</copyright>
     <item>
       <title>File: 3,
              Errors: 276,
              Warnings: 0,
              Infos: 0
       </title>
-            <link>http://forge.sonatype.com/plugins-parent/munge-maven-plugin//checkstyle.html</link>
+            <link>http://github.com/sonatype/munge-maven-plugin/checkstyle.html</link>
       <description>
-        <p>Click <a href="http://forge.sonatype.com/plugins-parent/munge-maven-plugin//checkstyle.html">here</a> for the full Checkstyle report.</p>
+        <p>Click <a href="http://github.com/sonatype/munge-maven-plugin/checkstyle.html">here</a> for the full Checkstyle report.</p>
 
         <table summary="Files" boder="1">
           <thead>
@@ -29,7 +29,7 @@
           <tbody>
                           <tr>
                 <td>
-                  <a href="http://forge.sonatype.com/plugins-parent/munge-maven-plugin//checkstyle.html#org.sonatype.plugins.munge.MungeForkMojo.java">org/sonatype/plugins/munge/MungeForkMojo.java</a>
+                  <a href="http://github.com/sonatype/munge-maven-plugin/checkstyle.html#org.sonatype.plugins.munge.MungeForkMojo.java">org/sonatype/plugins/munge/MungeForkMojo.java</a>
                 </td>
                 <td>
                   0
@@ -43,7 +43,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://forge.sonatype.com/plugins-parent/munge-maven-plugin//checkstyle.html#org.sonatype.plugins.munge.MungeMojo.java">org/sonatype/plugins/munge/MungeMojo.java</a>
+                  <a href="http://github.com/sonatype/munge-maven-plugin/checkstyle.html#org.sonatype.plugins.munge.MungeMojo.java">org/sonatype/plugins/munge/MungeMojo.java</a>
                 </td>
                 <td>
                   0
@@ -57,7 +57,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://forge.sonatype.com/plugins-parent/munge-maven-plugin//checkstyle.html#org.sonatype.plugins.munge.Munge.java">org/sonatype/plugins/munge/Munge.java</a>
+                  <a href="http://github.com/sonatype/munge-maven-plugin/checkstyle.html#org.sonatype.plugins.munge.Munge.java">org/sonatype/plugins/munge/Munge.java</a>
                 </td>
                 <td>
                   0
