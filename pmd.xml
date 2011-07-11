@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.2" timestamp="2010-10-19T12:04:24.265">
-<file name="/Users/mcculls/Code/munge-maven-plugin/src/main/java/org/sonatype/plugins/munge/Munge.java">
+<pmd version="4.2.2" timestamp="2011-07-12T00:33:59.881">
+<file name="/Users/mcculls/Code/maven-plugins/munge-maven-plugin/src/main/java/org/sonatype/plugins/munge/Munge.java">
 <violation beginline="191" endline="191" begincolumn="21" endcolumn="41" rule="BooleanInstantiation" ruleset="Basic Rules" package="org.sonatype.plugins.munge" class="Munge" method="cmd_if" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#BooleanInstantiation" priority="2">
 Avoid instantiating Boolean objects; reference Boolean.TRUE or Boolean.FALSE or call Boolean.valueOf() instead.
 </violation>
